@@ -1,0 +1,699 @@
+EESchema Schematic File Version 4
+EELAYER 29 0
+EELAYER END
+$Descr USLetter 11000 8500
+encoding utf-8
+Sheet 1 1
+Title "Kicad Workshop PCB"
+Date "2019-07-13"
+Rev "0"
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L kicad-workshop:USB-C_HRO16 J1
+U 1 1 5D2DB42D
+P 1300 3450
+F 0 "J1" H 1183 3615 50  0000 C CNN
+F 1 "TYPE-C-31-M-12" H 1183 3524 50  0000 C CNN
+F 2 "kicad-workshop:USB_C_Receptacle_HRO_TYPE-C-31-M-12" H 900 3500 50  0001 L CNN
+F 3 "https://datasheet.lcsc.com/szlcsc/1903211732_Korean-Hroparts-Elec-TYPE-C-31-M-12_C165948.pdf" V 1150 3450 50  0001 C CNN
+	1    1300 3450
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR01
+U 1 1 5D2DC331
+P 1500 4800
+F 0 "#PWR01" H 1500 4550 50  0001 C CNN
+F 1 "GND" H 1505 4627 50  0000 C CNN
+F 2 "" H 1500 4800 50  0001 C CNN
+F 3 "" H 1500 4800 50  0001 C CNN
+	1    1500 4800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1500 4800 1500 4750
+Wire Wire Line
+	1500 4550 1450 4550
+Wire Wire Line
+	1450 4650 1500 4650
+Connection ~ 1500 4650
+Wire Wire Line
+	1500 4650 1500 4550
+Wire Wire Line
+	1450 4750 1500 4750
+Connection ~ 1500 4750
+Wire Wire Line
+	1500 4750 1500 4650
+NoConn ~ 1450 4450
+NoConn ~ 1450 4350
+$Comp
+L Device:R R1
+U 1 1 5D2DCD1F
+P 1700 4450
+F 0 "R1" H 1770 4496 50  0000 L CNN
+F 1 "5.1 k" H 1770 4405 50  0000 L CNN
+F 2 "kicad-workshop:R_0603_1608Metric" V 1630 4450 50  0001 C CNN
+F 3 "~" H 1700 4450 50  0001 C CNN
+	1    1700 4450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R2
+U 1 1 5D2DD4CF
+P 2050 4450
+F 0 "R2" H 2120 4496 50  0000 L CNN
+F 1 "5.1 k" H 2120 4405 50  0000 L CNN
+F 2 "kicad-workshop:R_0603_1608Metric" V 1980 4450 50  0001 C CNN
+F 3 "~" H 2050 4450 50  0001 C CNN
+	1    2050 4450
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR02
+U 1 1 5D2DD69E
+P 1700 4600
+F 0 "#PWR02" H 1700 4350 50  0001 C CNN
+F 1 "GND" H 1705 4427 50  0000 C CNN
+F 2 "" H 1700 4600 50  0001 C CNN
+F 3 "" H 1700 4600 50  0001 C CNN
+	1    1700 4600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR03
+U 1 1 5D2DD82A
+P 2050 4600
+F 0 "#PWR03" H 2050 4350 50  0001 C CNN
+F 1 "GND" H 2055 4427 50  0000 C CNN
+F 2 "" H 2050 4600 50  0001 C CNN
+F 3 "" H 2050 4600 50  0001 C CNN
+	1    2050 4600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1450 4250 1700 4250
+Wire Wire Line
+	1700 4250 1700 4300
+Wire Wire Line
+	2050 4150 2050 4300
+Wire Wire Line
+	1450 4150 2050 4150
+Text Label 1500 4150 0    50   ~ 0
+CC1
+Text Label 1500 4250 0    50   ~ 0
+CC2
+Wire Wire Line
+	1450 3750 1500 3750
+Wire Wire Line
+	1500 3750 1500 3850
+Wire Wire Line
+	1500 3850 1450 3850
+Wire Wire Line
+	1450 3950 1500 3950
+Wire Wire Line
+	1500 3950 1500 4050
+Wire Wire Line
+	1500 4050 1450 4050
+Connection ~ 1500 3950
+Connection ~ 1500 3850
+Text Label 1600 3850 0    50   ~ 0
+D-
+Text Label 1600 3950 0    50   ~ 0
+D+
+Wire Wire Line
+	1450 3650 1500 3650
+Wire Wire Line
+	1500 3650 1500 3550
+Wire Wire Line
+	1500 3550 1450 3550
+Wire Wire Line
+	1500 3550 2250 3550
+Connection ~ 1500 3550
+Text Label 1600 3550 0    50   ~ 0
+VBUS
+$Comp
+L kicad-workshop:EFM32HG309 U1
+U 1 1 5D2E17BD
+P 4200 3650
+F 0 "U1" H 4200 4617 50  0000 C CNN
+F 1 "EFM32HG309F64G-B-QFN24" H 4200 4526 50  0000 C CNN
+F 2 "kicad-workshop:QFN-24-1EP_5x5mm_P0.65mm_EP3.6x3.6mm" V 4200 4400 50  0001 R CNN
+F 3 "https://www.silabs.com/support/resources.ct-data-sheets.ct-manuals_quick-start-guides.ct-manuals_reference-manuals.p-microcontrollers_32-bit-mcus_happy-gecko" V 4200 3550 50  0001 C CNN
+	1    4200 3650
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0101
+U 1 1 5D2E3744
+P 4950 4400
+F 0 "#PWR0101" H 4950 4150 50  0001 C CNN
+F 1 "GND" H 4955 4227 50  0000 C CNN
+F 2 "" H 4950 4400 50  0001 C CNN
+F 3 "" H 4950 4400 50  0001 C CNN
+	1    4950 4400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4950 4400 4950 4350
+Wire Wire Line
+	4950 4350 4900 4350
+$Comp
+L power:+3.3V #PWR0102
+U 1 1 5D2E48C4
+P 3450 2900
+F 0 "#PWR0102" H 3450 2750 50  0001 C CNN
+F 1 "+3.3V" H 3465 3073 50  0000 C CNN
+F 2 "" H 3450 2900 50  0001 C CNN
+F 3 "" H 3450 2900 50  0001 C CNN
+	1    3450 2900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3500 3250 3450 3250
+Wire Wire Line
+	3450 3250 3450 3150
+Wire Wire Line
+	3500 3150 3450 3150
+Connection ~ 3450 3150
+Wire Wire Line
+	3450 3150 3450 3050
+Wire Wire Line
+	3500 3050 3450 3050
+Connection ~ 3450 3050
+Wire Wire Line
+	3450 3050 3450 2950
+Wire Wire Line
+	3500 2950 3450 2950
+Connection ~ 3450 2950
+Wire Wire Line
+	3450 2950 3450 2900
+Wire Wire Line
+	3500 3350 3450 3350
+Wire Wire Line
+	3450 3350 3450 3250
+Connection ~ 3450 3250
+$Comp
+L Device:R R3
+U 1 1 5D2E76F5
+P 3100 3850
+F 0 "R3" V 3000 3850 50  0000 C CNN
+F 1 "15" V 3100 3850 50  0000 C CNN
+F 2 "kicad-workshop:R_0603_1608Metric" V 3030 3850 50  0001 C CNN
+F 3 "~" H 3100 3850 50  0001 C CNN
+	1    3100 3850
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R4
+U 1 1 5D2E7F18
+P 3100 3950
+F 0 "R4" V 3200 3950 50  0000 C CNN
+F 1 "15" V 3100 3950 50  0000 C CNN
+F 2 "kicad-workshop:R_0603_1608Metric" V 3030 3950 50  0001 C CNN
+F 3 "~" H 3100 3950 50  0001 C CNN
+	1    3100 3950
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3250 3850 3500 3850
+Wire Wire Line
+	3500 3950 3250 3950
+Wire Wire Line
+	1500 3850 2950 3850
+Wire Wire Line
+	1500 3950 2950 3950
+NoConn ~ 3500 3650
+$Comp
+L Device:C C2
+U 1 1 5D2EE341
+P 3450 4600
+F 0 "C2" H 3565 4646 50  0000 L CNN
+F 1 "1 μF" H 3565 4555 50  0000 L CNN
+F 2 "kicad-workshop:C_0603_1608Metric" H 3488 4450 50  0001 C CNN
+F 3 "~" H 3450 4600 50  0001 C CNN
+	1    3450 4600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0103
+U 1 1 5D2EE887
+P 3450 4750
+F 0 "#PWR0103" H 3450 4500 50  0001 C CNN
+F 1 "GND" H 3455 4577 50  0000 C CNN
+F 2 "" H 3450 4750 50  0001 C CNN
+F 3 "" H 3450 4750 50  0001 C CNN
+	1    3450 4750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3500 4350 3450 4350
+Wire Wire Line
+	3450 4350 3450 4450
+$Comp
+L Device:C C3
+U 1 1 5D2EF5E6
+P 3450 5450
+F 0 "C3" H 3565 5496 50  0000 L CNN
+F 1 "1 μF" H 3565 5405 50  0000 L CNN
+F 2 "kicad-workshop:C_0603_1608Metric" H 3488 5300 50  0001 C CNN
+F 3 "~" H 3450 5450 50  0001 C CNN
+	1    3450 5450
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0104
+U 1 1 5D2EF5F0
+P 3450 5600
+F 0 "#PWR0104" H 3450 5350 50  0001 C CNN
+F 1 "GND" H 3455 5427 50  0000 C CNN
+F 2 "" H 3450 5600 50  0001 C CNN
+F 3 "" H 3450 5600 50  0001 C CNN
+	1    3450 5600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR0105
+U 1 1 5D2F1B04
+P 3450 5300
+F 0 "#PWR0105" H 3450 5150 50  0001 C CNN
+F 1 "+3.3V" H 3465 5473 50  0000 C CNN
+F 2 "" H 3450 5300 50  0001 C CNN
+F 3 "" H 3450 5300 50  0001 C CNN
+	1    3450 5300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C4
+U 1 1 5D2F2AC2
+P 3850 5450
+F 0 "C4" H 3965 5496 50  0000 L CNN
+F 1 "1 μF" H 3965 5405 50  0000 L CNN
+F 2 "kicad-workshop:C_0603_1608Metric" H 3888 5300 50  0001 C CNN
+F 3 "~" H 3850 5450 50  0001 C CNN
+	1    3850 5450
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0106
+U 1 1 5D2F2ACC
+P 3850 5600
+F 0 "#PWR0106" H 3850 5350 50  0001 C CNN
+F 1 "GND" H 3855 5427 50  0000 C CNN
+F 2 "" H 3850 5600 50  0001 C CNN
+F 3 "" H 3850 5600 50  0001 C CNN
+	1    3850 5600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR0107
+U 1 1 5D2F2AD6
+P 3850 5300
+F 0 "#PWR0107" H 3850 5150 50  0001 C CNN
+F 1 "+3.3V" H 3865 5473 50  0000 C CNN
+F 2 "" H 3850 5300 50  0001 C CNN
+F 3 "" H 3850 5300 50  0001 C CNN
+	1    3850 5300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C1
+U 1 1 5D2F5021
+P 2950 4600
+F 0 "C1" H 3065 4646 50  0000 L CNN
+F 1 "4.7 μF" H 3065 4555 50  0000 L CNN
+F 2 "kicad-workshop:C_0603_1608Metric" H 2988 4450 50  0001 C CNN
+F 3 "~" H 2950 4600 50  0001 C CNN
+	1    2950 4600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0108
+U 1 1 5D2F502B
+P 2950 4750
+F 0 "#PWR0108" H 2950 4500 50  0001 C CNN
+F 1 "GND" H 2955 4577 50  0000 C CNN
+F 2 "" H 2950 4750 50  0001 C CNN
+F 3 "" H 2950 4750 50  0001 C CNN
+	1    2950 4750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3500 4150 2950 4150
+Wire Wire Line
+	2950 4150 2950 4450
+Wire Wire Line
+	2950 4150 2250 4150
+Wire Wire Line
+	2250 4150 2250 3550
+Connection ~ 2950 4150
+$Comp
+L power:+3.3V #PWR0109
+U 1 1 5D2FC288
+P 3500 4250
+F 0 "#PWR0109" H 3500 4100 50  0001 C CNN
+F 1 "+3.3V" V 3515 4378 50  0000 L CNN
+F 2 "" H 3500 4250 50  0001 C CNN
+F 3 "" H 3500 4250 50  0001 C CNN
+	1    3500 4250
+	0    -1   -1   0   
+$EndComp
+Text Notes 2700 3750 0    50   ~ 0
+Place 15 ohms\nclose to\nEFM32
+$Comp
+L Connector_Generic:Conn_01x04 J2
+U 1 1 5D303734
+P 6000 3750
+F 0 "J2" H 6080 3696 50  0000 L CNN
+F 1 "Conn_01x04" H 6080 3651 50  0001 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical" H 6000 3750 50  0001 C CNN
+F 3 "~" H 6000 3750 50  0001 C CNN
+	1    6000 3750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4900 3750 5800 3750
+Wire Wire Line
+	5800 3850 4900 3850
+Wire Wire Line
+	5800 3950 5750 3950
+Wire Wire Line
+	5750 3950 5750 4000
+Wire Wire Line
+	5800 3650 5750 3650
+Wire Wire Line
+	5750 3650 5750 3600
+$Comp
+L power:GND #PWR0110
+U 1 1 5D307663
+P 5750 4000
+F 0 "#PWR0110" H 5750 3750 50  0001 C CNN
+F 1 "GND" H 5755 3827 50  0000 C CNN
+F 2 "" H 5750 4000 50  0001 C CNN
+F 3 "" H 5750 4000 50  0001 C CNN
+	1    5750 4000
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR0111
+U 1 1 5D307927
+P 5750 3600
+F 0 "#PWR0111" H 5750 3450 50  0001 C CNN
+F 1 "+3.3V" H 5765 3773 50  0000 C CNN
+F 2 "" H 5750 3600 50  0001 C CNN
+F 3 "" H 5750 3600 50  0001 C CNN
+	1    5750 3600
+	1    0    0    -1  
+$EndComp
+Text Label 5200 3050 2    50   ~ 0
+SDA
+Text Label 5200 3150 2    50   ~ 0
+SCL
+Wire Wire Line
+	4900 3250 5200 3250
+Wire Wire Line
+	4900 3350 5200 3350
+Text Label 5200 3250 2    50   ~ 0
+R
+Text Label 5200 3350 2    50   ~ 0
+G
+Wire Wire Line
+	4900 3450 5200 3450
+Text Label 5200 3450 2    50   ~ 0
+B
+$Comp
+L Device:R R5
+U 1 1 5D312A09
+P 5350 2850
+F 0 "R5" H 5420 2896 50  0000 L CNN
+F 1 "5.1 k" H 5420 2805 50  0000 L CNN
+F 2 "kicad-workshop:R_0603_1608Metric" V 5280 2850 50  0001 C CNN
+F 3 "~" H 5350 2850 50  0001 C CNN
+	1    5350 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R6
+U 1 1 5D312D07
+P 5700 2850
+F 0 "R6" H 5770 2896 50  0000 L CNN
+F 1 "5.1 k" H 5770 2805 50  0000 L CNN
+F 2 "kicad-workshop:R_0603_1608Metric" V 5630 2850 50  0001 C CNN
+F 3 "~" H 5700 2850 50  0001 C CNN
+	1    5700 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR0112
+U 1 1 5D313007
+P 5350 2600
+F 0 "#PWR0112" H 5350 2450 50  0001 C CNN
+F 1 "+3.3V" H 5365 2773 50  0000 C CNN
+F 2 "" H 5350 2600 50  0001 C CNN
+F 3 "" H 5350 2600 50  0001 C CNN
+	1    5350 2600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5350 2700 5350 2600
+Connection ~ 5350 2700
+Wire Wire Line
+	5350 3050 5350 3000
+Wire Wire Line
+	4900 3050 5350 3050
+Wire Wire Line
+	5700 3150 5700 3000
+Wire Wire Line
+	4900 3150 5700 3150
+Wire Wire Line
+	5350 2700 5700 2700
+$Comp
+L Connector_Generic:Conn_01x04 J3
+U 1 1 5D31AD9D
+P 6750 2950
+F 0 "J3" H 6830 2896 50  0000 L CNN
+F 1 "Conn_01x04" H 6830 2851 50  0001 L CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x04_P2.54mm_Vertical" H 6750 2950 50  0001 C CNN
+F 3 "~" H 6750 2950 50  0001 C CNN
+	1    6750 2950
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0113
+U 1 1 5D31BDEA
+P 6550 2850
+F 0 "#PWR0113" H 6550 2600 50  0001 C CNN
+F 1 "GND" V 6555 2722 50  0000 R CNN
+F 2 "" H 6550 2850 50  0001 C CNN
+F 3 "" H 6550 2850 50  0001 C CNN
+	1    6550 2850
+	0    1    1    0   
+$EndComp
+$Comp
+L power:+3.3V #PWR0114
+U 1 1 5D31C2FB
+P 6550 2950
+F 0 "#PWR0114" H 6550 2800 50  0001 C CNN
+F 1 "+3.3V" V 6550 3050 50  0000 L CNN
+F 2 "" H 6550 2950 50  0001 C CNN
+F 3 "" H 6550 2950 50  0001 C CNN
+	1    6550 2950
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	6550 3050 6250 3050
+Text Label 6250 3050 0    50   ~ 0
+SCL
+Wire Wire Line
+	6550 3150 6250 3150
+Text Label 6250 3150 0    50   ~ 0
+SDA
+$Comp
+L kicad-workshop:UHD1110-FKA D1
+U 1 1 5D33B19C
+P 8150 3850
+F 0 "D1" H 8150 4367 50  0000 C CNN
+F 1 "UHD1110-FKA" H 8150 4276 50  0000 C CNN
+F 2 "kicad_pcb:LED_cree_4_1x1" H 8150 4350 50  0001 C CNN
+F 3 "https://www.cree.com/led-components/media/documents/ds-UHD1110-FKA.pdf" H 8150 3400 50  0001 C CNN
+	1    8150 3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R7
+U 1 1 5D33ED28
+P 7800 3650
+F 0 "R7" V 7700 3650 50  0000 C CNN
+F 1 "240" V 7800 3650 50  0000 C CNN
+F 2 "kicad-workshop:R_0603_1608Metric" V 7730 3650 50  0001 C CNN
+F 3 "~" H 7800 3650 50  0001 C CNN
+	1    7800 3650
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R8
+U 1 1 5D33FB01
+P 7800 3850
+F 0 "R8" V 7700 3850 50  0000 C CNN
+F 1 "240" V 7800 3850 50  0000 C CNN
+F 2 "kicad-workshop:R_0603_1608Metric" V 7730 3850 50  0001 C CNN
+F 3 "~" H 7800 3850 50  0001 C CNN
+	1    7800 3850
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R9
+U 1 1 5D33FE1C
+P 7800 4050
+F 0 "R9" V 7700 4050 50  0000 C CNN
+F 1 "240" V 7800 4050 50  0000 C CNN
+F 2 "kicad-workshop:R_0603_1608Metric" V 7730 4050 50  0001 C CNN
+F 3 "~" H 7800 4050 50  0001 C CNN
+	1    7800 4050
+	0    1    1    0   
+$EndComp
+Text Label 8650 3850 2    50   ~ 0
+VBUS
+Wire Wire Line
+	8650 3850 8350 3850
+Wire Wire Line
+	7650 3650 7350 3650
+Wire Wire Line
+	7650 3850 7350 3850
+Text Label 7350 3650 0    50   ~ 0
+R
+Text Label 7350 3850 0    50   ~ 0
+G
+Wire Wire Line
+	7650 4050 7350 4050
+Text Label 7350 4050 0    50   ~ 0
+B
+Text Label 5150 3750 0    50   ~ 0
+SWCLK
+Text Label 5150 3850 0    50   ~ 0
+SWDIO
+Text Label 3300 3850 0    50   ~ 0
+D1-
+Text Label 3300 3950 0    50   ~ 0
+D1+
+$Comp
+L Device:Rotary_Encoder_Switch SW2
+U 1 1 5D36C6C5
+P 6300 5050
+F 0 "SW2" H 6300 5417 50  0000 C CNN
+F 1 "PEC12R-4130F-S0012" H 6300 5326 50  0000 C CNN
+F 2 "Rotary_Encoder:RotaryEncoder_Alps_EC12E-Switch_Vertical_H20mm" H 6150 5210 50  0001 C CNN
+F 3 "~" H 6300 5310 50  0001 C CNN
+	1    6300 5050
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0115
+U 1 1 5D36F4BE
+P 6000 5050
+F 0 "#PWR0115" H 6000 4800 50  0001 C CNN
+F 1 "GND" H 6005 4877 50  0000 C CNN
+F 2 "" H 6000 5050 50  0001 C CNN
+F 3 "" H 6000 5050 50  0001 C CNN
+	1    6000 5050
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0116
+U 1 1 5D36F91E
+P 6600 5150
+F 0 "#PWR0116" H 6600 4900 50  0001 C CNN
+F 1 "GND" H 6605 4977 50  0000 C CNN
+F 2 "" H 6600 5150 50  0001 C CNN
+F 3 "" H 6600 5150 50  0001 C CNN
+	1    6600 5150
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	6600 4950 6850 4950
+Wire Wire Line
+	4900 4050 5450 4050
+Wire Wire Line
+	5450 4050 5450 4950
+Wire Wire Line
+	5450 4950 6000 4950
+Wire Wire Line
+	6000 5150 5350 5150
+Wire Wire Line
+	5350 5150 5350 4150
+Wire Wire Line
+	5350 4150 4900 4150
+Text Label 5150 4050 0    50   ~ 0
+ENCA
+Text Label 5150 4150 0    50   ~ 0
+ENCB
+Text Label 5200 2950 2    50   ~ 0
+ENCS
+Wire Wire Line
+	4900 2950 5200 2950
+Text Label 6850 4950 2    50   ~ 0
+ENCS
+$Comp
+L kicad-workshop:tooling_hole TH1
+U 1 1 5D38B1D5
+P 1100 5550
+F 0 "TH1" H 1178 5550 50  0000 L CNN
+F 1 "tooling_hole" H 1250 5550 50  0001 L CNN
+F 2 "kicad-workshop:tooling_hole_2.55" H 1250 5650 50  0001 L CNN
+F 3 "" V 1300 5750 50  0001 C CNN
+	1    1100 5550
+	1    0    0    -1  
+$EndComp
+$Comp
+L kicad-workshop:tooling_hole TH2
+U 1 1 5D38B61D
+P 1100 5700
+F 0 "TH2" H 1178 5700 50  0000 L CNN
+F 1 "tooling_hole" H 1250 5700 50  0001 L CNN
+F 2 "kicad-workshop:tooling_hole_2.55" H 1250 5800 50  0001 L CNN
+F 3 "" V 1300 5900 50  0001 C CNN
+	1    1100 5700
+	1    0    0    -1  
+$EndComp
+NoConn ~ 4900 3550
+NoConn ~ 4900 3650
+NoConn ~ 4900 3950
+$Comp
+L power:PWR_FLAG #FLG0101
+U 1 1 5D39B029
+P 2250 3550
+F 0 "#FLG0101" H 2250 3625 50  0001 C CNN
+F 1 "PWR_FLAG" H 2250 3723 50  0000 C CNN
+F 2 "" H 2250 3550 50  0001 C CNN
+F 3 "~" H 2250 3550 50  0001 C CNN
+	1    2250 3550
+	1    0    0    -1  
+$EndComp
+Connection ~ 2250 3550
+$Comp
+L power:GND #PWR0117
+U 1 1 5D3A301F
+P 2150 5650
+F 0 "#PWR0117" H 2150 5400 50  0001 C CNN
+F 1 "GND" H 2155 5477 50  0000 C CNN
+F 2 "" H 2150 5650 50  0001 C CNN
+F 3 "" H 2150 5650 50  0001 C CNN
+	1    2150 5650
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:PWR_FLAG #FLG0102
+U 1 1 5D3A32F5
+P 2150 5650
+F 0 "#FLG0102" H 2150 5725 50  0001 C CNN
+F 1 "PWR_FLAG" H 2150 5823 50  0000 C CNN
+F 2 "" H 2150 5650 50  0001 C CNN
+F 3 "~" H 2150 5650 50  0001 C CNN
+	1    2150 5650
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC

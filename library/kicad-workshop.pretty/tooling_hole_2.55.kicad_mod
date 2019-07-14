@@ -1,0 +1,13 @@
+(module tooling_hole_2.55 (layer F.Cu) (tedit 5B9F06B0)
+  (descr DocString)
+  (tags Keywords)
+  (attr virtual)
+  (fp_text reference TH? (at 0.1 -0.8) (layer F.SilkS) hide
+    (effects (font (size 0.7 0.7) (thickness 0.127)))
+  )
+  (fp_text value th (at 0 1.27) (layer F.SilkS) hide
+    (effects (font (size 0.7 0.7) (thickness 0.127)))
+  )
+  (pad "" np_thru_hole circle (at 0 0) (size 2.55 2.55) (drill 2.55) (layers *.Cu *.Paste *.Mask)
+    (zone_connect 2))
+)

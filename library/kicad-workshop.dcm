@@ -1,0 +1,23 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP EFM32HG309
+D EFM32HG309 ARM Cortex M0+ microcontroller with USB
+K Happy Gecko
+F https://www.silabs.com/support/resources.ct-data-sheets.ct-manuals_quick-start-guides.ct-manuals_reference-manuals.p-microcontrollers_32-bit-mcus_happy-gecko
+$ENDCMP
+#
+$CMP UHD1110-FKA
+D LED RGB, Common Anode, SMD, 1.0x1.0mm
+F https://www.cree.com/led-components/media/documents/ds-UHD1110-FKA.pdf
+$ENDCMP
+#
+$CMP USB-C_HRO16
+D USB C connector HRO 16 pin
+F https://datasheet.lcsc.com/szlcsc/1903211732_Korean-Hroparts-Elec-TYPE-C-31-M-12_C165948.pdf
+$ENDCMP
+#
+$CMP tooling_hole
+D Tooling hole for stencil alignment
+$ENDCMP
+#
+#End Doc Library

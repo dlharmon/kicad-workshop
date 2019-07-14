@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name kicad-workshop)(type KiCad)(uri /home/dlharmon/repos/kicad-workshop/library/kicad-workshop.pretty)(options "")(descr ""))
+)
