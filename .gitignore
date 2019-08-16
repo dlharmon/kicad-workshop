@@ -4,3 +4,5 @@
 *.bak
 */bom/
 */fp-info-cache
+__pycache__
+*autosave*
