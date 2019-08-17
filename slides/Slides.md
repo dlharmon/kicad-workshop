@@ -1,4 +1,4 @@
-## The demo PCB
+## The PCB Download files [https://github.com/dlharmon/kicad-workshop](https://github.com/dlharmon/kicad-workshop)
 
 ![3D render](kicadworkshop.png){width=30%}![Photo](PCBphoto.jpg){width=37%}
 
@@ -57,6 +57,18 @@ If left bare, copper would oxidize reducing solderability.
  - Pin: terminal of a component that connects electrically to the PCB, may not be a pin on modern components, but a ball or bit of exposed metal
  - Pad: copper area on a PCB intended to be soldered to a pin
  - Net: set of electrically connected items on a PCB
+ - mil = 0.001 inch = 25.4 μm
+ - oz = oz / sqft = 35 μm copper
+
+## Design rules
+
+ - Minimum drill sizes, trace widths, spacings, annular rings
+ - OSHPark: 0.152 mm trace, 0.152 mm space, 0.254 mm minimum via hole, 0.508 mm minimum via pad
+ - Some manufacturers check and will reject your files if not within the rules
+ - OSHPark does not check and you can cheat, but don't expect a refund if you have shorts or opens
+ - [OSHPark](https://docs.oshpark.com/design-tools/kicad/kicad-design-rules/)
+ - [https://github.com/sethhillbrand/kicad_templates](https://github.com/sethhillbrand/kicad_templates)
+ - Preferences->Configure Paths set KICAD_TEMPLATE_DIR to location of above
 
 ## PCB Manufacturing Panels
 
@@ -76,10 +88,12 @@ This is simply a list of some places I've used.
    * $5 per square inch 2 layer, 12 days or 5 days for 2x the price
    * $10 per square inch 4 layer, 12 days
    * $10 per square inch 2 layer flex
+ - [EuroCircuits](https://eurocircuits.com) - shared panel, more options than most
+ - [PCBPool](https://pcb-pool.com) - Ireland, shared panel, offers 6 layer
  - [JLCPCB](https://jlcpcb.com) - China, shared panel service, low prices, good quality. Does make some edits to files submitted before printing. Offers stencils and parts too. $17 DHL shipping.
  - [WellPCB](https://wellpcb.com) - China, build to spec
- - [Circuits West](http://circuitswest.com) - Longmont
- - [Advanced Circuits](https://4pcb.com) - Aurora
+ - [Circuits West](http://circuitswest.com) - Longmont, CO
+ - [Advanced Circuits](https://4pcb.com) - Aurora,  CO
 
 ### Stencils
  [OSHStencils](https://oshstencils.com): fast, reasonable cost. Stainless steel or polyimide plastic.
@@ -91,6 +105,8 @@ This is simply a list of some places I've used.
  - [Adafruit](https://www.adafruit.com/), [SparkFun](https://sparkfun.com) - Hobbyist friendly, less overwhelming selection.
  - [LCSC](https://lcsc.com) - China, low prices, not an authorized distributor for some of what they sell.
  - [Aliexpress](https://aliexpress.com), [Ebay](https://ebay.com), Amazon sellers - use caution.
+
+ - [FindChips](https://findchips.com), [Octopart](https://octopart.com): parts search sites, shows price and stock and many distributors
 
 ## Passive package size codes
 
@@ -120,7 +136,7 @@ This is simply a list of some places I've used.
  - store energy
  - higher voltage and capacitance ratings require larger size
  - Many types: ceramic, film, wet aluminum electrolytic, polymer electrolytic, tantalum, etc.
- - Capacitors and their non-idealities is a highly complex topic
+ - Capacitors and their non-idealities are a highly complex topic
 
 
 ## Ceramic capacitors
@@ -133,16 +149,20 @@ This is simply a list of some places I've used.
  - X5R, X7R, X6S, etc have a large capacitance drop with applied voltage, some temperature variation, very common
  - Y5V, Z5U - avoid, large variation over temperature
 
+## IC packages
 
-### Moisture sensitive
+![QFN](QFNs.jpg){width=32%} ![TSSOP](tssop.jpg){width=32%} ![BGA](bga.jpg){width=32%}
 
-### ESD sensitive
+ - QFN, TSSOP, BGA
+ - more variety than this out there
+ - BGA has an undeserved reputation for being difficult
 
-## Units
- - mil = 0.001 inch = 25.4 μm
- - oz = oz / sqft = 35 μm copper
+## Moisture sensitive and ESD sensitive parts
 
-## Create empty project
+ - Moisture senstive - part absorbs water which boils in reflow, causing cracking, these parts are shipped with dessicant in special bags
+ - ESD is when a person or object builds up charge and then discharges to a circuit or component, like when walking across carpet and then touching a metal object. This can be thousands of volts and can damage electronics. Our dry climate makes this problem worse. These parts should be kept in their bags and handled using an ESD mat and/or wrist strap. Nothing in this project is particularly sensitive.
+
+## Get started - Create empty project
 
  - Add project specific schematic library (Preferences->Manage Symbol Libraries)
  - Add project specific footprints library (Preferences->Manage Footprint Libraries)
@@ -150,17 +170,17 @@ This is simply a list of some places I've used.
 
 ## USB C Device interface
 
-![](USB.png){width=22%}
+![](USB.png){width=30%} ![](usbconn.jpg){width=50%}
 
- - Add USB C symbol
+ - Add USB C symbol - kicad-workshop:USB-C_HRO16
  - Add ground symbol
  - add wires between USB ground pins, ground symbol
- - add a 5.1 k resistor, set footprint, connect to CC2, ground
+ - add a 5.1 k resistor (Device:R), set footprint, connect to CC2, ground
  - duplicate for CC1
 
 ## USB C Device interface (continued)
 
-![](USB.png){width=22%}
+![](USB.png){width=30%} ![](usbconn.jpg){width=50%}
 
  - label CC1, CC2
  - add wires to D-, D+, A6 and A7 will be connected in one cable orientation, B6, B7 in the other, so need to parallel.
@@ -169,6 +189,8 @@ This is simply a list of some places I've used.
 
 ## Microcontroller
 
+![](uc.png){width=50%} ![](decoupling.png){width=20%}
+
 - Connect ground, 3.3 V symbols
  - Capacitors - data sheet, [AN0046](https://www.silabs.com/documents/public/application-notes/AN0046.pdf)
  - The USB spec and AN0046 conflict on connector grounding, following USB spec
@@ -176,7 +198,7 @@ This is simply a list of some places I've used.
 
 ## LED
 
-![](led.jpg){width=35%} ![](led_keycap.jpg){width=35%}
+![](led.jpg){width=35%} ![](led_keycap.jpg){width=35%} ![](ledsch.png){width=25%}
 
  - Symbol: kicad-workshop:UHD1110-FKA, Cree UHD1110-FKA
  - Footprint: kicad-workshop:LED_cree_4_1x1 (doesn't exist!)
@@ -209,18 +231,26 @@ This is simply a list of some places I've used.
 
 ## Serial Wire Debug (SWD) header
 
+![](swd.png){width=50%}
+
  - Used to program bootloader into the microcontroller
  - Can be used to debug microcontroller code with GDB
- -
+ - Symbol: Connector_Generic:Conn_01x04
+ - Footprint: Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical
 
 ## Misc
+
  - tooling holes for stencil alignment
+ - power flags for ERC
+ - run ERC
 
 ## PCB Layout - design rule setup
  - File->Board Setup
  - Select layer count
 
 ## Create LED footprint
+
+![](ledfp.png){width=50%}
 
 ## Placement
 
@@ -232,6 +262,11 @@ This is simply a list of some places I've used.
  - Add ground vias
  - Avoid placing vias in pads - air bubbles, paste sucked down hole
  - Set thermal relief as desired on through hole parts
+ - Trace width consideration
+   * Thermal, resistance - use Kicad's calculator
+   * Design rules
+   * Mechanical robustness
+   * Impedance (advanced topic)
 
 ## Board outline
 
@@ -245,10 +280,9 @@ This is simply a list of some places I've used.
  - Identification text
  - Logos, artwork if desired
 
-## Design rule check
-
 ## Order PCB
 
+ - run design rule check
  - [https://oshpark.com](https://oshpark.com)
  - browse for files button
  - select your .kicad_pcb file
