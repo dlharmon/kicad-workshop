@@ -37,7 +37,7 @@ place a shared order to reduce shipping costs.
  - In the fw directory, `make flash` will build and flash the firmware. It assumes an FT232H based programmer with the default USB ID.
  - usb_comm.py can be used to interact with the device from Python over USB.
 
-## udev rules
+### udev rules
 
 On Linux, to avoid having to run as root (change dlharmon to your user), add the following to `/etc/udev/rules.d/99-local.rules`:
 
