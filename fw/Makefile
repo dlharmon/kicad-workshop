@@ -1,7 +1,7 @@
 BINARY = kicad-workshop
 DEVICE = EFM32HG309F64
 OBJS += kicad-workshop.o usb_descriptors.o
-CFLAGS += -Os -ggdb3 -Wall -Wextra -std=c++11 -fno-exceptions
+CFLAGS += -Os -ggdb3 -Wall -Wextra -std=c++17 -fno-exceptions
 CPPFLAGS += -MD $(CFLAGS)
 LDFLAGS += -static -nostartfiles
 LDLIBS += -Wl,--start-group -lc -lgcc -lnosys -Wl,--end-group

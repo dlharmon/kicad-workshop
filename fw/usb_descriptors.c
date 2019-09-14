@@ -68,8 +68,8 @@ const struct usb_config_descriptor usb_config_descr =
         .wTotalLength = 0,
         .bNumInterfaces = 1,
         .bConfigurationValue = 1,
-        .iConfiguration = 0, /* string index */
+        .iConfiguration = 0, // string index
         .bmAttributes = 0x80,
-        .bMaxPower = 200, // 2 mA increment
+        .bMaxPower = 50, // 2 mA increment
         .interface = usb_interfaces,
 };

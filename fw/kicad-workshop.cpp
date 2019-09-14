@@ -25,9 +25,6 @@
 // SCL: PC1
 // USB: PC14, 15
 
-#define LED_PORT GPIOB
-#define LED_PIN GPIO11
-
 #define SCL_PORT GPIOC // I2C0 AF4
 #define SDA_PORT GPIOC
 #define SCL_PIN GPIO1
@@ -68,7 +65,7 @@ void delay(uint32_t cycles) {
                 ;
 }
 
-#define I2C_ADDR_TCPC 0x78
+#define I2C_ADDR_OLED 0x78
 
 static int i2c_transaction(uint8_t addr, const uint8_t *wdata, size_t wcount,
                            uint8_t *rdata, uint32_t rcount) {
@@ -86,7 +83,7 @@ static int i2c_transaction(uint8_t addr, const uint8_t *wdata, size_t wcount,
                 if (t.elapsed() > timeout)
                         goto fail;
         }
-        I2C0_TXDATA = I2C_ADDR_TCPC;
+        I2C0_TXDATA = I2C_ADDR_OLED;
         // register address
         while ((I2C0_STATUS & I2C_STATUS_TXBL) == 0) {
                 if (t.elapsed() > timeout)
@@ -113,7 +110,7 @@ static int i2c_transaction(uint8_t addr, const uint8_t *wdata, size_t wcount,
                         if (t.elapsed() > timeout)
                                 goto fail;
                 }
-                I2C0_TXDATA = I2C_ADDR_TCPC | I2C_READ;
+                I2C0_TXDATA = I2C_ADDR_OLED | I2C_READ;
         }
         for (size_t i = 0; i < rcount; i++) {
                 while ((I2C0_STATUS & I2C_STATUS_RXDATAV) == 0) {
@@ -141,16 +138,6 @@ static void i2c_write(uint8_t addr, const void *data, int count) {
         i2c_transaction(addr, (uint8_t *)data, count, NULL, 0);
 }
 
-static int i2c_read(uint8_t addr, void *data, int count) {
-        return i2c_transaction(addr, NULL, 0, (uint8_t *)data, count);
-}
-
-static int i2c_read(uint8_t addr) {
-        uint8_t rv;
-        i2c_read(addr, &rv, 1);
-        return rv;
-}
-
 static uint32_t read_adc(uint32_t input, uint32_t ref) {
         ADC0_SINGLECTRL =
             (5 << 20) | ((ref & 0x7) << 16) | ((input & 0xF) << 8);
@@ -158,6 +145,18 @@ static uint32_t read_adc(uint32_t input, uint32_t ref) {
         while ((ADC0_STATUS & ADC_STATUS_SINGLEDV) == 0)
                 ;
         return ADC0_SINGLEDATA;
+}
+
+static uint32_t correct_temp(uint32_t temp) {
+        int cal_v = DI_ADC0_TEMP_0_READ_1V25 >> 4;
+        int tc = temp - cal_v;
+        // 1/6.3 deg C per ADC code, multiply by
+        // 10*65536
+        tc *= 104025;
+        tc >>= 16;
+        tc = DI_CAL_TEMP_0 * 10 - tc;
+        // tc is now 10 * temp in deg C
+        return tc;
 }
 
 static void out_cb(usbd_device *usbd_dev, uint8_t ep) {
@@ -179,20 +178,15 @@ static void out_cb(usbd_device *usbd_dev, uint8_t ep) {
                 uint32_t rv = read_adc(buf[1], buf[2]);
                 if (buf[1] == 8) {
                         // it's the temp sensor, convert to deg C
-                        int cal_v = DI_ADC0_TEMP_0_READ_1V25 >> 4;
-                        int tc = rv - cal_v;
-                        // 1/6.3 deg C per ADC code, multiply by
-                        // 10*65536
-                        tc *= 104025;
-                        tc >>= 16;
-                        tc = DI_CAL_TEMP_0 * 10 - tc;
-                        // tc is now 10 * temp in deg C
-                        rv = tc;
+                        rv = correct_temp(rv);
                 }
                 usbd_ep_write_packet(usbd_dev, 0x82, &rv, 4);
                 return;
         }
         if (buf[0] == 4) {
+                TIMER1_CC0_CCV = buf[1] & 0xFFFF;
+                TIMER1_CC1_CCV = buf[1] >> 16;
+                TIMER1_CC2_CCV = buf[2] & 0xFFFF;
                 return;
         }
         if (buf[0] == 5) {
@@ -242,72 +236,118 @@ static void hex_str(uint32_t x, char *s) {
         }
 }
 
-int isr_count = 0;
+#include <stdio.h>
 
-void gpio_even_isr(void) {
-        GPIO_IFC = 0xFFFF;
-        isr_count++;
-}
-
-uint8_t fb[1024];
-
-static void OLED_text(const char *const text, int startpos) {
-        for (int i = 0; text[i] != 0; i++) {
-                if (startpos + 6 * i + 6 >= sizeof(fb))
-                        break;
-                for (int j = 0; j < 5; j++) {
-                        fb[startpos + (6 * i) + j] = font[text[i] * 5 + j];
-                }
-                fb[startpos + (6 * i) + 5] = 0;
+static void temperature_str(uint32_t x, char *s) {
+        s[7] = 0;
+        s[6] = 'C';
+        s[5] = ' ';
+        s[4] = '0' + (x % 10);
+        s[3] = '.';
+        for (int i = 2; i >= 0; i--) {
+                x /= 10;
+                s[i] = '0' + (x % 10);
         }
 }
 
-// update the OLED with the frame buffer - about 13 ms
+int isr_count = 0;
+
+void gpio_even_isr(void) { GPIO_IFC = 0xFFFF; }
+
+class Encoder {
+private:
+        uint32_t angle = 0;
+        int last_change = 0;
+        int pins_prev = 3;
+        uint32_t get_pins() { return 0x3 & (GPIO_PE_DIN >> 12); }
+
+public:
+        bool pushed_raw() { return !(0x1 & (GPIO_PA_DIN >> 0)); }
+        void update() {
+                int p = get_pins();
+                if (p == pins_prev)
+                        return;
+                // 0 rose
+                if ((p & 1) && (!(pins_prev & 1)))
+                        angle += (p & 2) ? -1 : 1;
+                // 0 fell
+                else if ((!(p & 1)) && (pins_prev & 1))
+                        angle += (p & 2) ? 1 : -1;
+                pins_prev = p;
+        }
+        uint32_t get_angle() { return angle; }
+} encoder;
+
+// this interrupt fires every 2.730666 ms (65536 / 24 MHz)
+void timer1_isr(void) {
+        TIMER1_IFC = 1; // clear the interrupt
+        encoder.update();
+        isr_count++;
+}
+
+// each byte is a column of 8 pixels
+uint8_t fb[1024];
+
+static void OLED_text(const char *const text, int startpos,
+                      uint8_t inverse = 0) {
+        for (size_t i = 0; text[i] != 0; i++) {
+                if (startpos + 6 * i + 6 >= sizeof(fb))
+                        break;
+                for (int j = 0; j < 5; j++) {
+                        fb[startpos + (6 * i) + j] =
+                            inverse ^ font[text[i] * 5 + j];
+                }
+                fb[startpos + (6 * i) + 5] = inverse;
+        }
+}
+
+// update the OLED display with the frame buffer
 static void OLED_update() {
-        // set page
-        i2c_write(0, 0xB0);
-        i2c_write(0, 0x00);
-        i2c_write(0, 0x10);
-        // write page
-        i2c_transaction(0x40, fb, 512, NULL, 0);
+        for (int i = 0; i < 8; i++) {
+                i2c_write(0, 0xB0 + i); // set page
+                i2c_write(0, 0x02);     // set lower column address
+                i2c_write(0, 0x10);     // set higher column address
+                // write page
+                i2c_transaction(0x40, &fb[128 * i], 128, NULL, 0);
+        }
 }
 
 static void OLED_init() {
         // loosely based on
         // https://github.com/bitbank2/oled_96/blob/master/oled96.c
-        constexpr uint8_t oled32_init[] = {
-            0xae, // display off
-            0xd5, // set display clock div
-            0x80, // clock div value
-            0xa8, // set multiplex
-            0x1f, // multiplex value
-            0xd3, // set display offset
-            0x00, // display offset
-            0x40, // set start line to 0
-            0x8d, // set charge pump
-            0x14, // charge pump internal VCC?
-            0xa1, // segment remap
-            0xc8, // scan direction
-            0xda, // set com pins HW config
-            0x02, // arg for above ?
-            0x81, // set contrast Bank 0
-            0x7f, // arg for above ?
-            0xd9, // set precharge
-            0xf1, // precharge arg?
-            0xdb, // VCOMH deslect level
-            0x40, // VCOMH arg?
-            0xa4, // not forced to all on
-            0xa6, // not inverse
-            0x20, // memory addressing mode
-            0x00,
-            0xaf // display on
+
+        constexpr uint8_t oled64_init[] = {
+            0xae,       // display off
+            0xd5,       // set display clock div
+            0x80,       // clock div value
+            0xa8,       // set multiplex
+            0x3f,       // multiplex value
+            0xd3,       // set display offset
+            0x00,       // display offset
+            0x40,       // set start line to 0
+            0x8d,       // set charge pump
+            0x14,       // charge pump internal VCC?
+            0xa1,       // segment remap
+            0xc8,       // scan direction
+            0xda,       // set com pins HW config
+            0x12,       // arg for above ?
+            0x81,       // set contrast Bank 0
+            0xcf,       // arg for above ?
+            0xd9,       // set precharge
+            0xf1,       // precharge arg?
+            0xdb,       // VCOMH deslect level
+            0x40,       // VCOMH arg?
+            0xa4,       // not forced to all on
+            0xa6,       // not inverse
+            0x20, 0x00, // memory addressing mode
+            0xaf        // display on
         };
 
-        i2c_write(0, oled32_init, sizeof(oled32_init));
+        i2c_write(0, oled64_init, sizeof(oled64_init));
 
         OLED_text(serial_string, 0);
         OLED_text("Denhac Kicad Workshop", 256);
-        OLED_text("#  ", 384);
+        OLED_text("Temp = ", 384);
 }
 
 int main(void) {
@@ -341,9 +381,10 @@ int main(void) {
         TIMER1_CC0_CTRL = TIMER_CC_CTRL_MODE_PWM | TIMER_CC_CTRL_OUTINV;
         TIMER1_CC1_CTRL = TIMER_CC_CTRL_MODE_PWM | TIMER_CC_CTRL_OUTINV;
         TIMER1_CC2_CTRL = TIMER_CC_CTRL_MODE_PWM | TIMER_CC_CTRL_OUTINV;
-        TIMER1_CC0_CCV = 0x10;
+        TIMER1_CC0_CCV = 0x50;
         TIMER1_CC1_CCV = 0x0;
-        TIMER1_CC2_CCV = 0x10;
+        TIMER1_CC2_CCV = 0x50;
+        TIMER1_IEN = 1; // overflow interrupt enabled
 
         TIMER1_CMD = 1;
 
@@ -385,6 +426,9 @@ int main(void) {
         nvic_set_priority(NVIC_USB_IRQ, 0x10);
         nvic_enable_irq(NVIC_USB_IRQ);
 
+        nvic_enable_irq(NVIC_TIMER1_IRQ);
+        nvic_set_priority(NVIC_TIMER1_IRQ, 0x10);
+
         // Configure the system tick
         STK_RVR = 0xFFFFFF;
         STK_CSR = STK_CSR_CLKSOURCE_AHB | STK_CSR_ENABLE;
@@ -396,11 +440,9 @@ int main(void) {
         // OLED is super slow to power on
         // Fails at 1500 ms, suceeds at 1600 ms
         // sometimes fails at 1800 ms cold boot
-        delay(2000 * TIMER_MS);
+        delay(160 * TIMER_MS);
 
         OLED_init();
-
-        bool blink = 0;
 
         Timer t_display;
 
@@ -408,21 +450,24 @@ int main(void) {
                 Timer t{};
                 while (t.elapsed() < TIMER_MS * 250)
                         ;
-                GPIO_P_DOUTTGL(LED_PORT) = LED_PIN;
                 GPIO_IFS = (1 << 2); // force an interrupt
 
-                blink ^= 1;
-                if (blink)
-                        OLED_text("# _", 384);
-                else
-                        OLED_text("#  ", 384);
+                char tempstr[9];
+                hex_str(t_display.elapsed(), tempstr);
+                tempstr[8] = 0;
+                OLED_text(tempstr, 128);
 
-                hex_str(t_display.elapsed(), serial_string + 0);
-                serial_string[8] = 0;
-                OLED_text(serial_string, 128);
+                hex_str(isr_count, tempstr);
+                OLED_text(tempstr, 192);
 
-                hex_str(isr_count, serial_string + 0);
-                OLED_text(serial_string, 192);
+                int adct = correct_temp(read_adc(8, 0));
+
+                temperature_str(adct, tempstr);
+                OLED_text(tempstr, 384 + 42);
+
+                hex_str(encoder.get_angle(), tempstr);
+                OLED_text("encoder ", 896, encoder.pushed_raw() ? 0xFF : 0x00);
+                OLED_text(tempstr, 48 + 896);
 
                 OLED_update();
         }
