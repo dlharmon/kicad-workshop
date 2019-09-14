@@ -36,3 +36,12 @@ place a shared order to reduce shipping costs.
  - [OpenOCD](http://openocd.org/) required to flash the firmware the first time and until a bootloader is developed.
  - In the fw directory, `make flash` will build and flash the firmware. It assumes an FT232H based programmer with the default USB ID.
  - usb_comm.py can be used to interact with the device from Python over USB.
+
+## udev rules
+
+On Linux, to avoid having to run as root (change dlharmon to your user), add the following to `/etc/udev/rules.d/99-local.rules`:
+
+```
+ATTR{idVendor}=="0403", ATTR{idProduct}=="6014", SYMLINK+="ftdi-%k", MODE="660", GROUP="dlharmon"
+SUBSYSTEM=="usb", ATTR{idVendor}=="10c4", ATTR{idProduct}=="8b00", MODE="0660", GROUP="dlharmon"
+```
