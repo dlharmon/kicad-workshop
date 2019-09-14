@@ -17,7 +17,7 @@ place a shared order to reduce shipping costs.
 ## The device
 
 - [Silicon Labs EFM32HG309 microcontroller](https://www.silabs.com/products/mcu/32-bit/efm32-happy-gecko), ARM Cortex M0+, 64 kiB flash, 8 kiB ram USB device interface. About $1.50.
- - [128x32 pixel OLED](https://www.aliexpress.com/item/0-91-inch-128x32-I2C-IIC-Serial-Blue-OLED-LCD-Display-Module-0-91-12832-SSD1306/32788923016.html?ws_ab_test=searchweb0_0,searchweb201602_6_10065_10130_10068_10890_10547_319_10546_317_10548_10545_10696_453_10084_454_10083_10618_10307_537_536_10059_10884_10887_321_322_10103-10890,searchweb201603_51,ppcSwitch_0&algo_expid=ce015d67-aa3b-42e3-a658-b8d4b17154e0-2&algo_pvid=ce015d67-aa3b-42e3-a658-b8d4b17154e0) Some of these arrived defective. Not included in the parts kit.
+ - Connector for [128x64 pixel OLED](https://www.aliexpress.com/item/32847040077.html?spm=a2g0s.9042311.0.0.6e644c4dlFzZIQ) Display is not included in the parts kit, order one yourself if you want it.
  - [tiny RGB LED](https://www.mouser.com/datasheet/2/90/ds-UHD1110-FKA-1149141.pdf)
  - rotary encoder with push switch
  - USB for power and communication, will provide Python code to communicate with it from a PC
@@ -29,3 +29,10 @@ place a shared order to reduce shipping costs.
  - Electronics knowledge is not required, but helpful.
  - Programming knowledge is not required, but helpful.
  - USB C cable (C-C for newer laptops, A-C for older) by last session. I'll have a few on hand.
+
+## Firmware
+ - This is entirely optional. The instructor can flash firmware for you if you are not interested.
+ - [ARM Cortex compiler](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads) Alternately, your Linux distro may have a package `gcc-arm-none-eabi` or similar which may work.
+ - [OpenOCD](http://openocd.org/) required to flash the firmware the first time and until a bootloader is developed.
+ - In the fw directory, `make flash` will build and flash the firmware. It assumes an FT232H based programmer with the default USB ID.
+ - usb_comm.py can be used to interact with the device from Python over USB.
