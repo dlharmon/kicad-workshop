@@ -25,7 +25,7 @@ place a shared order to reduce shipping costs.
 
 ## Prerequisites
  - Laptop with [Kicad 5.x](http://www.kicad-pcb.org/download/) (preferably the latest release, 5.1.4) installed. 5.1.3 was not released due to a [major bug](https://bugs.launchpad.net/kicad/+bug/1838446), but made it into some distros. Avoid that. I have one spare laptop with Kicad available.
- - [Interactive HTML BOM plugin installed](https://github.com/openscopeproject/InteractiveHtmlBom) (optional)
+ - [Interactive HTML BOM plugin installed](https://github.com/openscopeproject/InteractiveHtmlBom) (optional, may require installing python3-wxgtk4)
  - Electronics knowledge is not required, but helpful.
  - Programming knowledge is not required, but helpful.
  - USB C cable (C-C for newer laptops, A-C for older) by last session. I'll have a few on hand.
