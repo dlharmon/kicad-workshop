@@ -8,11 +8,9 @@ import time
 from struct import pack, unpack
 from datetime import datetime
 
-
-
 class USBSpiDev:
     def __init__(self, product):
-        self.dev = usb.core.find(idVendor=0x10c4, idProduct=0x8b00)
+        self.dev = usb.core.find(idVendor=0x1209, idProduct=0xf00f)
         dev = self.dev
         if self.dev is None:
             raise ValueError('Device not found')
