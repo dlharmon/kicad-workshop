@@ -18,13 +18,13 @@ place a shared order to reduce shipping costs.
 
 - [Silicon Labs EFM32HG309 microcontroller](https://www.silabs.com/products/mcu/32-bit/efm32-happy-gecko), ARM Cortex M0+, 64 kiB flash, 8 kiB ram USB device interface. About $1.50.
  - Connector for [128x64 pixel OLED](https://www.aliexpress.com/item/32847040077.html?spm=a2g0s.9042311.0.0.6e644c4dlFzZIQ) Display is not included in the parts kit, order one yourself if you want it.
- - [tiny RGB LED](https://www.mouser.com/datasheet/2/90/ds-UHD1110-FKA-1149141.pdf)
+ - LEDs
  - rotary encoder with push switch
  - USB for power and communication, will provide Python code to communicate with it from a PC
  - This is about $3 in parts yet demonstrates quite a few things
 
 ## Prerequisites
- - Laptop with [Kicad 5.x](http://www.kicad-pcb.org/download/) (preferably the latest release, 5.1.4) installed. 5.1.3 was not released due to a [major bug](https://bugs.launchpad.net/kicad/+bug/1838446), but made it into some distros. Avoid that. I have one spare laptop with Kicad available.
+ - Laptop with [Kicad 5.1.4](http://www.kicad-pcb.org/download/) 5.1.2 is probably OK. Last time we had a few students using 5.0.x and it was problematic.
  - [Interactive HTML BOM plugin installed](https://github.com/openscopeproject/InteractiveHtmlBom) (optional, may require installing python3-wxgtk4)
  - Electronics knowledge is not required, but helpful.
  - Programming knowledge is not required, but helpful.
