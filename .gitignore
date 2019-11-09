@@ -2,6 +2,7 @@
 *.bck
 *-bak
 *.bak
+*.json
 */bom/
 */fp-info-cache
 __pycache__

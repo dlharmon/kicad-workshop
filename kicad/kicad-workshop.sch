@@ -1,5 +1,6 @@
 EESchema Schematic File Version 4
-EELAYER 29 0
+LIBS:kicad-workshop-cache
+EELAYER 30 0
 EELAYER END
 $Descr USLetter 11000 8500
 encoding utf-8
@@ -415,16 +416,6 @@ Text Label 5200 3150 2    50   ~ 0
 SCL
 Wire Wire Line
 	4900 3250 5200 3250
-Wire Wire Line
-	4900 3350 5200 3350
-Text Label 5200 3250 2    50   ~ 0
-R
-Text Label 5200 3350 2    50   ~ 0
-G
-Wire Wire Line
-	4900 3450 5200 3450
-Text Label 5200 3450 2    50   ~ 0
-B
 $Comp
 L Device:R R5
 U 1 1 5D312A09
@@ -513,65 +504,20 @@ Wire Wire Line
 Text Label 6250 3150 0    50   ~ 0
 SDA
 $Comp
-L kicad-workshop:UHD1110-FKA D1
-U 1 1 5D33B19C
-P 8150 3850
-F 0 "D1" H 8150 4367 50  0000 C CNN
-F 1 "UHD1110-FKA" H 8150 4276 50  0000 C CNN
-F 2 "kicad_pcb:LED_cree_4_1x1" H 8150 4350 50  0001 C CNN
-F 3 "https://www.cree.com/led-components/media/documents/ds-UHD1110-FKA.pdf" H 8150 3400 50  0001 C CNN
-	1    8150 3850
-	1    0    0    -1  
-$EndComp
-$Comp
 L Device:R R7
 U 1 1 5D33ED28
-P 7800 3650
-F 0 "R7" V 7700 3650 50  0000 C CNN
-F 1 "240" V 7800 3650 50  0000 C CNN
-F 2 "kicad-workshop:R_0603_1608Metric" V 7730 3650 50  0001 C CNN
-F 3 "~" H 7800 3650 50  0001 C CNN
-	1    7800 3650
+P 6700 3350
+F 0 "R7" V 6600 3350 50  0000 C CNN
+F 1 "240" V 6700 3350 50  0000 C CNN
+F 2 "kicad-workshop:R_0603_1608Metric" V 6630 3350 50  0001 C CNN
+F 3 "~" H 6700 3350 50  0001 C CNN
+	1    6700 3350
 	0    1    1    0   
 $EndComp
-$Comp
-L Device:R R8
-U 1 1 5D33FB01
-P 7800 3850
-F 0 "R8" V 7700 3850 50  0000 C CNN
-F 1 "240" V 7800 3850 50  0000 C CNN
-F 2 "kicad-workshop:R_0603_1608Metric" V 7730 3850 50  0001 C CNN
-F 3 "~" H 7800 3850 50  0001 C CNN
-	1    7800 3850
-	0    1    1    0   
-$EndComp
-$Comp
-L Device:R R9
-U 1 1 5D33FE1C
-P 7800 4050
-F 0 "R9" V 7700 4050 50  0000 C CNN
-F 1 "240" V 7800 4050 50  0000 C CNN
-F 2 "kicad-workshop:R_0603_1608Metric" V 7730 4050 50  0001 C CNN
-F 3 "~" H 7800 4050 50  0001 C CNN
-	1    7800 4050
-	0    1    1    0   
-$EndComp
-Text Label 8650 3850 2    50   ~ 0
-VBUS
 Wire Wire Line
-	8650 3850 8350 3850
-Wire Wire Line
-	7650 3650 7350 3650
-Wire Wire Line
-	7650 3850 7350 3850
-Text Label 7350 3650 0    50   ~ 0
-R
-Text Label 7350 3850 0    50   ~ 0
-G
-Wire Wire Line
-	7650 4050 7350 4050
-Text Label 7350 4050 0    50   ~ 0
-B
+	6550 3350 6250 3350
+Text Label 6250 3350 0    50   ~ 0
+LED
 Text Label 5150 3750 0    50   ~ 0
 SWCLK
 Text Label 5150 3850 0    50   ~ 0
@@ -696,4 +642,32 @@ F 3 "~" H 2150 5650 50  0001 C CNN
 	1    2150 5650
 	1    0    0    -1  
 $EndComp
+$Comp
+L Device:LED D1
+U 1 1 5DBDCDE8
+P 7000 3350
+F 0 "D1" H 6993 3095 50  0000 C CNN
+F 1 "LED" H 6993 3186 50  0000 C CNN
+F 2 "LED_SMD:LED_0603_1608Metric" H 7000 3350 50  0001 C CNN
+F 3 "~" H 7000 3350 50  0001 C CNN
+	1    7000 3350
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:GND #PWR0118
+U 1 1 5DBE3751
+P 7150 3350
+F 0 "#PWR0118" H 7150 3100 50  0001 C CNN
+F 1 "GND" H 7155 3177 50  0000 C CNN
+F 2 "" H 7150 3350 50  0001 C CNN
+F 3 "" H 7150 3350 50  0001 C CNN
+	1    7150 3350
+	0    -1   -1   0   
+$EndComp
+Text Label 5200 3250 2    50   ~ 0
+LED
+NoConn ~ 4900 3450
+NoConn ~ 4900 3350
+Text Notes 3200 5950 0    50   ~ 0
+Place C3, C4 close to U1, opposite sides
 $EndSCHEMATC
