@@ -29,6 +29,7 @@ place a shared order to reduce shipping costs.
  - Electronics knowledge is not required, but helpful.
  - Programming knowledge is not required, but helpful.
  - USB C cable (C-C for newer laptops, A-C for older) by last session. I'll have a few on hand.
+ - Clone or download [https://github.com/sethhillbrand/kicad_templates.git](https://github.com/sethhillbrand/kicad_templates.git)
 
 ## Firmware
  - This is entirely optional. The instructor can flash firmware for you if you are not interested.
