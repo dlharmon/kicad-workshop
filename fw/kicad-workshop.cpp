@@ -364,7 +364,7 @@ int main(void) {
         // R: PB7 TIM1 CC0
         // G: PB8 TIM1 CC1
         // B: PB11 TIM1 CC2
-        gpio_mode_setup(GPIOB, GPIO_MODE_WIRED_AND, GPIO7 | GPIO8 | GPIO11);
+        gpio_mode_setup(GPIOB, GPIO_MODE_PUSH_PULL, GPIO7 | GPIO8 | GPIO11);
 
         // ENCA: PE12 TIM2_CC2
         // ENCB: PE13 TIM2_CC3
