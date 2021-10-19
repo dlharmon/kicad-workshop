@@ -24,7 +24,7 @@ place a shared order to reduce shipping costs.
  - This is about $3 in parts yet demonstrates quite a few things
 
 ## Prerequisites
- - Laptop with [Kicad 5.1.4](http://www.kicad-pcb.org/download/) 5.1.2 is probably OK. Last time we had a few students using 5.0.x and it was problematic.
+ - Laptop with [Kicad 5.1.4](http://www.kicad.org/download/) 5.1.2 is probably OK. Last time we had a few students using 5.0.x and it was problematic.
  - [Interactive HTML BOM plugin installed](https://github.com/openscopeproject/InteractiveHtmlBom) (optional, may require installing python3-wxgtk4)
  - Electronics knowledge is not required, but helpful.
  - Programming knowledge is not required, but helpful.
